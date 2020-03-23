@@ -1,5 +1,7 @@
 use std::io;
 use chrono::{DateTime, FixedOffset};
+#[cfg(test)]
+use chrono::offset::TimeZone;
 
 pub fn get_input() -> String {
     let mut input = String::new();
@@ -29,4 +31,17 @@ pub fn run() {
     let epoch_ms = epoch * 1_000;
 
     println!("{}", epoch_ms);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn should_parse_datetime() {
+        let date_str = "2020-03-22 23:40:00+0900";
+        let datetime = FixedOffset::east(9 * 3600).ymd(2020, 3, 22).and_hms(23, 40, 0);
+
+        assert_eq!(datetime, parse_datetime(date_str));
+    }
 }
