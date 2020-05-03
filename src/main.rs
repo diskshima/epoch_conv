@@ -1,5 +1,5 @@
 use epoch_conv;
 
 fn main() {
-    epoch_conv::run()
+    epoch_conv::run();
 }

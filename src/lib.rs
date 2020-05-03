@@ -1,15 +1,36 @@
+use std::env;
 use std::io;
 use chrono::{DateTime, FixedOffset};
+
 #[cfg(test)]
 use chrono::offset::TimeZone;
 
-pub fn get_input() -> String {
-    let mut input = String::new();
+pub struct Config {
+    pub input: Option<String>,
+}
 
-    io::stdin().read_line(&mut input)
-        .expect("Failed to read line");
+impl Config {
+    pub fn new(mut args: env::Args) -> Config {
+        args.next();
 
-    input.trim().to_owned()
+        let input = args.next();
+
+        Config { input }
+    }
+}
+
+pub fn get_input(config: Config) -> String {
+    match config.input {
+        Some(input) => input,
+        None => {
+            let mut input = String::new();
+
+            io::stdin().read_line(&mut input)
+                .expect("Failed to read line");
+
+            input.trim().to_owned()
+        },
+    }
 }
 
 pub fn parse_datetime(input: &str) -> DateTime<FixedOffset> {
@@ -21,7 +42,9 @@ pub fn to_epoch(dt: DateTime<FixedOffset>) -> i64 {
 }
 
 pub fn run() {
-    let input = get_input();
+    let config = Config::new(env::args());
+
+    let input = get_input(config);
 
     let dt = parse_datetime(input.as_str());
 
