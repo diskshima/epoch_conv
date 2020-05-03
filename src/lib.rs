@@ -13,8 +13,7 @@ pub fn get_input() -> String {
 }
 
 pub fn parse_datetime(input: &str) -> DateTime<FixedOffset> {
-    DateTime::parse_from_str(input, "%Y-%m-%d %H:%M:%S %z")
-        .expect("Failed to parse date time")
+    DateTime::parse_from_str(input, "%+").expect("Failed to parse date time")
 }
 
 pub fn to_epoch(dt: DateTime<FixedOffset>) -> i64 {
