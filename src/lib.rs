@@ -61,7 +61,7 @@ mod tests {
 
     #[test]
     fn should_parse_datetime() {
-        let date_str = "2020-03-22 23:40:00+0900";
+        let date_str = "2020-03-22T23:40:00+09:00";
         let datetime = FixedOffset::east(9 * 3600).ymd(2020, 3, 22).and_hms(23, 40, 0);
 
         assert_eq!(datetime, parse_datetime(date_str));
